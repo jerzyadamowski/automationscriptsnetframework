@@ -1,0 +1,29 @@
+{
+    "Version": "1.2.1",
+    "DoRelease": "true",
+    "DoBackupLocal": "false",
+    "DoBackupRemote": "true",
+    "AlwaysCleanStart": "false",
+    "DefaultBuildConfiguration": "Stage",
+    "Applications": [
+        {
+            "Name": "SolutionName",
+            "IsActive": "true",
+            "GitRepository": "ssh://git@github:7999/unknow/unknown.git",
+            "BranchToCheckout": "master",
+            "SolutionFileRelativeLocation": "",
+            "Projects": [
+                {
+                    "Name": "WebApp",
+                    "IsActive": "true",
+                    "PathCsProj": "WebApp\\WebApp.csproj",
+                    "ProfileDeploy": "DeploymentName",
+                    "RealLocationProject": [
+                        "\\\\oc-lemur-app1.as.local\\c$\\inetpub\\wwwroot\\preprod.lemur.redakcja.pl",
+                        "\\\\oc-lemur-app2.as.local\\c$\\inetpub\\wwwroot\\preprod.lemur.redakcja.pl"
+                    ]
+                }
+            ]
+        }
+    ]
+}

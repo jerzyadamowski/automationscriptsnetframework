@@ -1,0 +1,41 @@
+{
+    "AvailableVariants": [
+        {
+            "Release": "release.json"
+        },
+        {
+            "Debug": "debug.json"
+        },
+        {
+            "Stage": "stage.json"
+        }
+    ],
+    "PSVersionMinimumRequired": "3",
+    "MsBuildAcceptedVersions": [
+        "12.0",
+        "14.0",
+        "15.0"
+    ],
+    "MsBuildVerbose": "quiet",
+    "LookingForGitDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "LookingForNugetDirectoriesToScan": [
+        "C:\\"
+    ],
+    "LookingForMsBuildDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "LookingFor7ZipDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "AllPromptSelectDefaultAnswer": "true",
+    "IgnoreCheckIsAdministratorMode": "false",
+    "SourceDirectoryEntry": "C:\\Publish\\Environment\\Source\\{0}\\{1}",
+    "PublishBackupDirectoryEntryLocal": "C:\\Publish\\Environment\\Backup\\Local",
+    "PublishBackupDirectoryEntryRemote": "C:\\Publish\\Environment\\Backup\\Remote\\{0}\\{1}",
+    "PublishDirectoryEntry": "C:\\Publish\\Environment\\Publish\\{0}\\{1}"
+}
