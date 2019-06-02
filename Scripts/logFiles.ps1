@@ -11,7 +11,7 @@ function PreserveCreateNewFile() {
     {
         return $true | out-null
     } else {
-        New-Item "$filePath" -type file -force
+        New-Item "$filePath" -type file -force | out-null
         return $true | out-null
     }
 }

@@ -1,4 +1,4 @@
-# Guide to Integrated Distributed Deploy for .net framework 4.5 (MsBuild 12,14) 
+# Guide to Integrated Distributed Deploy for .net framework 4.5 (MsBuild 12) 
 ---
 
 ## Getting Started
@@ -6,7 +6,7 @@
 
 Lets create new configurations for release, stage, debug.
 In this example I will use random repository from:
-https://github.com/imalokagrawal/asp-net-mvc-dotnet.git
+https://github.com/JonPSmith/SampleMvcWebApp
 
 From repository directories we should take preset configuration: ["Config/Preset/main.json"](Config/Preset/main.json) and put in in Config directory.
 
@@ -19,6 +19,104 @@ Ms Build 12: [MsBuild12](https://www.microsoft.com/en-us/download/details.aspx?i
 
 7 Zip: [7Zip](https://www.7-zip.org/)
 
+If you use windows 7 upgrade your powershell version to at least 3.0: 
+[Windows Management Framework 3.0](https://www.microsoft.com/en-us/download/details.aspx?id=34595)
+Version you use can be check by command:
+```
+PS> $PSVersionTable.PSVersion
+```
+
+Execution policy unlock needed:
+```
+Set-ExecutionPolicy RemoteSigned
+```
+
+When all installation process is done, its time to setup main.json. Replace current content of main.json with this code:
+```
+{
+    "AvailableVariants": [
+        {
+            "Release": "release.json"
+        }
+    ],
+    "PSVersionMinimumRequired": "3",
+    "MsBuildAcceptedVersions": [
+        "12.0",
+        "14.0",
+        "15.0"
+    ],
+    "MsBuildVerbose": "quiet",
+    "LookingForGitDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "LookingForNugetDirectoriesToScan": [
+        "C:\\"
+    ],
+    "LookingForMsBuildDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "LookingFor7ZipDirectoriesToScan": [
+        "${env:ProgramFiles(x86)}",
+        "${env:ProgramFiles}"
+    ],
+    "AllPromptSelectDefaultAnswer": "false",
+    "IgnoreCheckIsAdministratorMode": "false",
+    "SourceDirectoryEntry": "C:\\Publish\\Environment\\Source\\{0}\\{1}",
+    "PublishBackupDirectoryEntryLocal": "C:\\Publish\\Environment\\Backup\\Local",
+    "PublishBackupDirectoryEntryRemote": "C:\\Publish\\Environment\\Backup\\Remote\\{0}\\{1}",
+    "PublishDirectoryEntry": "C:\\Publish\\Environment\\Publish\\{0}\\{1}"
+}
+```
+
+Now lets create release file:
+
+Release.json
+```
+{
+    "Version": "1.0.3",
+    "DoRelease": "true",
+    "DoBackupLocal": "false",
+    "DoBackupRemote": "true",
+    "AlwaysCleanStart": "false",
+    "DefaultBuildConfiguration": "Release",
+    "Applications": [
+        {
+            "Name": "SampleWebApp",
+            "IsActive": "true",
+            "GitRepository": "git@github.com:JonPSmith/SampleMvcWebApp.git",
+            "BranchToCheckout": "master",
+            "SolutionFileRelativeLocation": "",
+            "Projects": [
+                {
+                    "Name": "SampleWebApp",
+                    "IsActive": "true",
+                    "PathCsProj": "SampleWebApp\\SampleWebApp.csproj",
+                    "ProfileDeploy": "publishprofile",
+                    "RealLocationProject": [
+                        "C:\\inetpub\\wwwroot\\SampleWebApplication"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+Time to first run:
+```
+PS> .\Main.ps1 -CurrentVariant Release
+```
+
+Solving problems:
+
+#### At Clone repository:
+* Change path proper git application
+* delete cached.json and set `"AllPromptSelectDefaultAnswer": "false"` and run again
+
+Example wont work because lack of publish profile! Sample project have to have pubxml.
+It might think that version 14.0, 15.0 doesn't work with publish profiles correctly - and i'll investigate why.
 
 > TODO: prepare full process of getting started
 
@@ -26,7 +124,7 @@ Ms Build 12: [MsBuild12](https://www.microsoft.com/en-us/download/details.aspx?i
 
 ## Known issues
 ---
-#### git - problem with clone can't spawn ssh.exe - check other git.exe in then OS.
+#### git - problem with clone can't spawn ssh.exe - check other git.exe in your OS.
 
 #### passphrase key doesn't work in non-interactive mode - if you use your openssl key with password in this scripts you might not login because we can't send password to git. Use your private key without passphrase key.
 

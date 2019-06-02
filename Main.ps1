@@ -6,6 +6,7 @@
 #   
 #  2017-09-18: implementing... - jadamowski
 #  2017-10-12: implementing releasing - jadamowski
+#  2019-06-02: archiving and moving to github - jadamowski
 Param(
     [Parameter(Mandatory=$true)][string]$CurrentVariant
 )
